@@ -15,12 +15,17 @@ export function HeroIntro() {
       <div
          data-hero-reveal
          data-hero-intro
-         className="flex min-h-0 flex-col justify-between gap-10 overflow-hidden rounded-tile bg-mint px-6 pt-8 pb-8 sm:px-12 sm:pt-10 sm:pb-9"
+         className="flex min-h-0 flex-col justify-between gap-10 overflow-hidden rounded-tile bg-mint px-3 pt-8 pb-8 sm:px-12 sm:pt-10 sm:pb-9"
       >
          <div>
-            <Pill data-hero-item>
+            <Pill
+               data-hero-item
+               className="flex-nowrap whitespace-nowrap max-[374px]:gap-1.5 max-[374px]:px-2.5 max-[374px]:py-1.5 max-[374px]:text-xs"
+            >
                <StatusDot />
-               Принимаем сегодня — без очередей
+               <span className="shrink-0 whitespace-nowrap">
+                  Принимаем сегодня — без очередей
+               </span>
             </Pill>
 
             <Title
@@ -39,8 +44,14 @@ export function HeroIntro() {
                боли и с честной сметой до начала лечения.
             </Text>
 
-            <div className="mt-7 flex flex-wrap gap-3" data-hero-item>
-               <ButtonLink href={routes.booking}>
+            <div
+               className="mt-7 flex flex-wrap gap-3 max-[374px]:flex-col"
+               data-hero-item
+            >
+               <ButtonLink
+                  href={routes.booking}
+                  className="max-[374px]:w-full max-[374px]:px-4 max-[374px]:text-sm"
+               >
                   Записаться на консультацию
                   <ArrowUpRightIcon />
                </ButtonLink>
@@ -48,6 +59,7 @@ export function HeroIntro() {
                   href={siteConfig.social.telegram}
                   external
                   variant="outline"
+                  className="max-[374px]:w-full max-[374px]:px-4 max-[374px]:text-sm"
                >
                   <TelegramLogoIcon />
                   Запись в Telegram
