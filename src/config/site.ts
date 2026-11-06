@@ -4,7 +4,7 @@ export const siteConfig = {
    title: "Стоматология «Бриз» в Волгограде — имплантация, виниры, брекеты",
    description:
       "Лечим, восстанавливаем и делаем зубы красивыми — бережно, без боли и с честной сметой. Имплантация, виниры, ортодонтия и детская стоматология в Волгограде.",
-    url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://briz-dent.ru",
+   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://briz-dent.ru",
    phone: { label: "+7 (900) 123-45-67", href: "tel:+79001234567" },
    email: "hello@briz-dent.ru",
    address: {
@@ -19,7 +19,9 @@ export const siteConfig = {
       vk: "https://vk.com/briz_dent",
    },
    rating: { value: "4.9", count: "1 200" },
-   license: "Л041-01021-34/00000000",
+   license: "...",
    /** Статично, чтобы страница целиком пререндерилась (без new Date()). */
    copyrightYear: 2026,
 } as const;
+
+// Л041-01021-34/00000000
