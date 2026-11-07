@@ -20,25 +20,34 @@ export function HeroMotion({ children }: PropsWithChildren) {
                [],
          );
 
-         if (
-            !elements.length ||
-            window.matchMedia("(prefers-reduced-motion: reduce)").matches
-         ) {
+         if (!elements.length) {
+            return;
+         }
+
+         const prefersReducedMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+         ).matches;
+
+         if (prefersReducedMotion) {
+            gsap.set(elements, { opacity: 1, scale: 1, y: 0 });
+            gsap.set(staggeredElements, { opacity: 1, y: 0 });
             return;
          }
 
          gsap.set(elements, { opacity: 0, scale: 0.98, y: 42 });
          gsap.set(staggeredElements, { opacity: 0, y: 24 });
 
-         const mediaPanel = elements.find((element) =>
-            element.hasAttribute("data-hero-media"),
-         );
          const mediaImage = scope.current?.querySelector<HTMLElement>(
             "[data-hero-media-image]",
          );
 
-         if (mediaPanel) gsap.set(mediaPanel, { opacity: 1 });
-         if (mediaImage) gsap.set(mediaImage, { scale: 1.08 });
+         const isSmallViewport = window.matchMedia(
+            "(max-width: 639px)",
+         ).matches;
+         const mediaImageScale = isSmallViewport ? 1.015 : 1.08;
+         const mediaImageDuration = isSmallViewport ? 0.35 : 1.1;
+
+         if (mediaImage) gsap.set(mediaImage, { scale: mediaImageScale });
 
          const observer = new IntersectionObserver(
             (entries) => {
@@ -87,10 +96,10 @@ export function HeroMotion({ children }: PropsWithChildren) {
                         mediaImage,
                         {
                            scale: 1,
-                           duration: 1.1,
+                           duration: mediaImageDuration,
                            ease: "power3.out",
                         },
-                        "-=0.7",
+                        isSmallViewport ? "-=0.2" : "-=0.7",
                      );
                   }
                });
@@ -108,5 +117,9 @@ export function HeroMotion({ children }: PropsWithChildren) {
       { scope },
    );
 
-   return <div ref={scope}>{children}</div>;
+   return (
+       <div ref={scope} data-hero-motion="pending">
+          {children}
+       </div>
+    );
 }

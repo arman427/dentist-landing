@@ -234,6 +234,17 @@
 }
 
 @layer base {
+   /* Keep the hero hidden on the first paint; GSAP owns the reveal afterwards. */
+   [data-hero-motion="pending"] [data-hero-reveal] {
+      opacity: 0;
+      transform: translate3d(0, 42px, 0) scale(0.98);
+   }
+
+   [data-hero-motion="pending"] [data-hero-item] {
+      opacity: 0;
+      transform: translate3d(0, 24px, 0);
+   }
+
    * {
       @apply border-border outline-ring/50;
    }
