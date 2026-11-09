@@ -1,5 +1,3 @@
-"use server";
-
 import { formatPhone, isCompletePhone } from "@/lib/phone";
 
 export type CallbackState = {
@@ -7,7 +5,7 @@ export type CallbackState = {
    message?: string;
 };
 
-/** Server Action формы «Перезвоните мне» — работает даже без JS. */
+/** Локальная валидация формы «Перезвоните мне». */
 export async function requestCallback(
    _prevState: CallbackState,
    formData: FormData,

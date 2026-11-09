@@ -1,4 +1,4 @@
-import { ArrowUpRightIcon, PlusIcon } from "@phosphor-icons/react/ssr";
+import { MinusIcon, PlusIcon } from "@phosphor-icons/react/ssr";
 
 import { IconCircle } from "@/components/shared/icon-circle";
 import type { Service } from "@/data/services";
@@ -38,8 +38,8 @@ export function ServiceIcon() {
          <PlusIcon
             className={`absolute ${fade} group-data-open/item:rotate-90 group-data-open/item:opacity-0`}
          />
-         <ArrowUpRightIcon
-            className={`absolute -rotate-45 opacity-0 ${fade} group-data-open/item:rotate-0 group-data-open/item:opacity-100`}
+         <MinusIcon
+            className={`absolute opacity-0 ${fade} group-data-open/item:rotate-0 group-data-open/item:opacity-100`}
          />
       </IconCircle>
    );

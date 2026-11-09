@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState, type ChangeEvent } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import { ArrowUpRightIcon } from "@phosphor-icons/react";
 
 import { Button } from "@/components/ui/button";
@@ -14,20 +14,22 @@ import { cn } from "@/lib/utils";
 
 const initialState: CallbackState = { status: "idle" };
 
-/** Клиентский компонент формы: маска телефона + статус отправки (Server Action). */
+/** Клиентский компонент формы: маска телефона + локальная валидация. */
 export function CallbackForm({ className }: { className?: string }) {
-   // Server Action передаём напрямую — так форма отправляется даже до гидрации/без JS
-   const [state, formAction, isPending] = useActionState(
-      requestCallback,
-      initialState,
-   );
+   const [state, setState] = useState(initialState);
+   const [isPending, setIsPending] = useState(false);
    const [phone, setPhone] = useState("");
-   const [handledState, setHandledState] = useState(state);
 
-   // Заявка принята — очищаем поле. Паттерн «состояние из прошлого рендера», без useEffect.
-   if (state !== handledState) {
-      setHandledState(state);
-      if (state.status === "success") setPhone("");
+   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+      event.preventDefault();
+      setIsPending(true);
+      const nextState = await requestCallback(
+         initialState,
+         new FormData(event.currentTarget),
+      );
+      setState(nextState);
+      setIsPending(false);
+      if (nextState.status === "success") setPhone("");
    }
 
    function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -49,7 +51,7 @@ export function CallbackForm({ className }: { className?: string }) {
 
    return (
       <form
-         action={formAction}
+         onSubmit={handleSubmit}
          noValidate
          className={cn("relative w-full max-w-130", className)}
       >

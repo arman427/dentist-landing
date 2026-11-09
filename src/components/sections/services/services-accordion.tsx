@@ -23,7 +23,7 @@ const ANIMATION_MS = 350;
 
 /**
  * Клиентская «оболочка»: хранит открытый пункт, всё содержимое приходит с сервера.
- * Всегда открыт ровно один пункт — на десктопе справа показывается его панель.
+ * На десктопе справа показывается панель выбранного пункта; все пункты можно закрыть.
  */
 export function ServicesAccordion({
    items,
@@ -32,7 +32,9 @@ export function ServicesAccordion({
    items: ServicesAccordionItem[];
    defaultValue: string;
 }) {
-   const [value, setValue] = useState(defaultValue);
+   const [value, setValue] = useState<string[]>(
+      defaultValue ? [defaultValue] : [],
+   );
    const frame = useRef(0);
 
    // На мобильных панели большие: пока верхний пункт схлопывается, держим нажатый
@@ -58,12 +60,11 @@ export function ServicesAccordion({
    return (
       <div className="grid gap-8 [overflow-anchor:none] lg:gap-4 xl:grid-cols-[1fr_400px_420px]">
          <Accordion
-            value={[value]}
+            value={value}
             onValueChange={(next) => {
                const id = next[0] as string | undefined;
-               if (!id) return; // не даём закрыть последний открытый пункт
-               keepInView(id);
-               setValue(id);
+               if (id) keepInView(id);
+               setValue(next as string[]);
             }}
             className="xl:self-start"
          >
@@ -100,10 +101,10 @@ export function ServicesAccordion({
             {items.map((item) => (
                <div
                   key={item.id}
-                  aria-hidden={item.id !== value}
+                  aria-hidden={item.id !== value[0]}
                   className={cn(
                      "col-start-1 row-start-1 grid grid-cols-[400fr_420fr] gap-4 text-base transition-[opacity,visibility,translate] duration-500 ease-accordion motion-reduce:transition-none",
-                     item.id === value
+                     item.id === value[0]
                         ? "visible opacity-100"
                         : "invisible translate-y-2 opacity-0",
                   )}

@@ -8,12 +8,10 @@ export type NavGroup = {
    links: NavLink[];
 };
 
-/**
- * Ключевые адреса. /doctors, /privacy, /licenses, /careers — пока заглушки (<PageStub />):
- * наполни страницы в src/app/… или поменяй ссылки здесь.
- */
+/** Ключевые адреса страниц и действий клиники. */
 export const routes = {
    booking: "/#contacts",
+   service: (serviceId: string) => `/services/${serviceId}`,
    doctors: "/doctors",
    privacy: "/privacy",
    licenses: "/licenses",
@@ -33,7 +31,7 @@ export const footerNav: NavGroup[] = [
       title: "Клиника",
       links: [
          { label: "О нас", href: "/#about" },
-         { label: "Врачи", href: "/#doctors" },
+         { label: "Врачи", href: routes.doctors },
          { label: "Лицензии", href: routes.licenses },
          { label: "Вакансии", href: routes.careers },
       ],
@@ -41,10 +39,10 @@ export const footerNav: NavGroup[] = [
    {
       title: "Услуги",
       links: [
-         { label: "Имплантация", href: "/#services" },
-         { label: "Виниры", href: "/#services" },
-         { label: "Ортодонтия", href: "/#services" },
-         { label: "Детская стоматология", href: "/#services" },
+         { label: "Имплантация", href: routes.service("implantation") },
+         { label: "Виниры", href: routes.service("aesthetics") },
+         { label: "Ортодонтия", href: routes.service("orthodontics") },
+         { label: "Детская стоматология", href: routes.service("kids") },
       ],
    },
    {
