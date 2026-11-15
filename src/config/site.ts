@@ -8,9 +8,9 @@ export const siteConfig = {
    phone: { label: "+7 (900) 123-45-67", href: "tel:+79001234567" },
    email: "hello@briz-dent.ru",
    address: {
-      street: "ул. Набережная, 12",
+      street: "ул. ...",
       city: "Волгоград",
-      postalCode: "400066",
+      postalCode: "...",
       mapUrl: `https://yandex.ru/maps/?text=${encodeURIComponent("Волгоград, ул. Набережная, 12")}`,
    },
    hours: { label: "Ежедневно 9:00 – 21:00", opens: "09:00", closes: "21:00" },
